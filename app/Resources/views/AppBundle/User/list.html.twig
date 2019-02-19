@@ -1,0 +1,17 @@
+{% extends 'AppBundle/layout.html.twig' %}
+
+{% block title %}Users{% endblock %}
+
+{% block body %}
+    <ol>
+        {% for user in users %}
+            <li>
+                <a href="{{ path('app_user_show', {id: user.id}) }}">{{ user.name }}</a>
+            </li>
+        {% endfor %}
+    </ol>
+
+    <p>
+        <a href="{{ path('app_user_new') }}">New User</a>
+    </p>
+{% endblock %}
