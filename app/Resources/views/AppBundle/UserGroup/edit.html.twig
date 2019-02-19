@@ -1,7 +1,16 @@
 {% extends "AppBundle/layout.html.twig" %}
 
-{% block title %}AppBundle:UserGroup:edit{% endblock %}
+{% block title %}Greoup Edit{% endblock %}
 
 {% block body %}
-<h1>Welcome to the UserGroup:edit page</h1>
+    <h1>Edit Group &laquo;{{ group.name }}&raquo;</h1>
+
+    {% if not error_message is empty %}
+        <p style="color:red;">Error: {{ error_message }}</p>
+    {% endif %}
+
+    <hr/>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 {% endblock %}

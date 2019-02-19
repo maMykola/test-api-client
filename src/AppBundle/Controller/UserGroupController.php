@@ -43,7 +43,7 @@ class UserGroupController extends Controller
         $error_message = '';
         $form = $this->createFormBuilder()
             ->add('name', TextType::class)
-            ->add('save', SubmitType::class, ['label' => 'Create '])
+            ->add('save', SubmitType::class, ['label' => 'Create Group'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -67,10 +67,41 @@ class UserGroupController extends Controller
      * @Route("/{id}/edit")
      * @Template("AppBundle/UserGroup/edit.html.twig")
      */
-    public function editAction($id)
+    public function editAction($id, Request $request)
     {
-        // !!! stub
-        return [];
+        $rs = $this->RemoteServer();
+
+        $group = $rs->findGroup($id);
+        if (empty($group)) {
+            return $this->createNotFoundException('Group not found');
+        }
+
+        $error_message = '';
+        $form = $this->createFormBuilder()
+            ->add('name', TextType::class)
+            ->add('save', SubmitType::class, ['label' => 'Update'])
+            ->getForm();
+        $form->setData(['name' => empty($group['name']) ? '' : $group['name']]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $update_result = $this->RemoteServer()->updateGroup($id, $data);
+        }
+
+        if (!empty($update_result['status']) && $update_result['status'] == 'success') {
+            return $this->redirectToRoute('app_usergroup_show', ['id' => $id]);
+        }
+
+        if (!empty($update_result['error'])) {
+            $error_message = $update_result['error'];
+        }
+
+        return [
+            'group' => $group,
+            'form' => $form->createView(),
+            'error_message' => $error_message,
+        ];
     }
 
     /**

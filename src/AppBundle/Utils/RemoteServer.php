@@ -106,6 +106,25 @@ class RemoteServer
     public function createGroup($group_name)
     {
         // !!! stub
+        // !!! mockup
+        return [
+            'status' => 'failed',
+            'error' => 'unexpected',
+        ];
+    }
+
+    /**
+     * Return status of user group update.
+     *
+     * @param  integer  $group_id
+     * @param  array    $data
+     * @return array
+     * @author Mykola Martynov
+     **/
+    public function updateGroup($group_id, $data)
+    {
+        // !!! stub
+        // !!! mockup
         return [
             'status' => 'failed',
             'error' => 'unexpected',
