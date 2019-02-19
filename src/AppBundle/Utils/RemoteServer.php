@@ -4,6 +4,8 @@ namespace AppBundle\Utils;
 
 class RemoteServer
 {
+    const API_URL_ALL_GROUPS = '/users/group';
+
     /**
      * Holds remote server hostname.
      *
@@ -25,7 +27,19 @@ class RemoteServer
         return $instance;
     }
 
-
+    /**
+     * Return remote url with the given path.
+     *
+     * @param  string   $path
+     * @param  integer  $id
+     * @return string
+     * @author Mykola Martynov
+     **/
+    private function getUrl($path, $id = null)
+    {
+        $url = 'http://' . $this->hostname . '/api' . str_replace('{id}', $id, $path);
+        return $url;
+    }
 
     /**
      * Return list of available user groups.
@@ -35,13 +49,16 @@ class RemoteServer
      **/
     public function allGroups()
     {
-        // !!! stub
-        // !!! mockup
-        return [
-            ['id' => 11, 'name' => 'Desingers'],
-            ['id' => 9, 'name' => 'Developer'],
-            ['id' => 10, 'name' => 'IT'],
-        ];
+        $api_url = $this->getUrl(self::API_URL_ALL_GROUPS);
+        $content = @file_get_contents($api_url);
+        
+        try {
+            $groups = json_decode($content, true);
+        } catch (\Exceptino $ex) {
+            return null;
+        }
+
+        return $groups;
     }
 
     /**
