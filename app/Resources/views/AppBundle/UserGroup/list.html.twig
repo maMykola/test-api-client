@@ -4,8 +4,8 @@
 
 {% block body %}
     <ol>
-        {% for groupn in groups %}
-            <li><a href="{{ path(app_usergroup_show) }}">{{ group.name }}</a></li>
+        {% for group in groups %}
+            <li><a href="{{ path('app_usergroup_show', {id: group.id}) }}">{{ group.name }}</a></li>
         {% endfor %}
     </ol>
 {% endblock %}
