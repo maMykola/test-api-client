@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -12,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @Route("/users/group")
  */
-class UserGroupController extends Controller
+class UserGroupController extends RemoteServerController
 {
     /**
      * @Route("/")
@@ -140,23 +139,5 @@ class UserGroupController extends Controller
             'form' => $form->createView(),
             'error_message' => $error_message,
         ];
-    }
-
-    /**
-     * Return object for remote server communication.
-     *
-     * @return RemoteServer
-     * @author Mykola Martynov
-     **/
-    private function RemoteServer()
-    {
-        static $remote_server = null;
-
-        if (empty($remote_server)) {
-            $host = $this->container->getParameter('remote_server_host');
-            $remote_server = \AppBundle\Utils\RemoteServer::getInstance($host);
-        }
-
-        return $remote_server;
     }
 }

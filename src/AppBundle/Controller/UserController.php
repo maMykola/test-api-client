@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -12,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @Route("/users")
  */
-class UserController extends Controller
+class UserController extends RemoteServerController
 {
     /**
      * @Route("/")
