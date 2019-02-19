@@ -6,6 +6,7 @@ class RemoteServer
 {
     const API_URL_ALL_GROUPS = '/users/group';
     const API_URL_FIND_GROUP = '/users/group/{id}';
+    const API_URL_CREATE_GROUP = '/users/group/create';
 
     /**
      * Holds remote server hostname.
@@ -39,8 +40,21 @@ class RemoteServer
      **/
     private function getJsonResponse($path, $id = null, $post_data = null)
     {
+        if (!empty($post_data)) {
+            $data = http_build_query($post_data);
+            $context = stream_context_create([
+                'http' => [
+                    'method' => 'POST',
+                    'header' => ['Content-Type: application/x-www-form-urlencoded', 'Content-Length: ' . strlen($data)],
+                    'content' => $data,
+                ],
+            ]);
+        } else {
+            $context = null;
+        }
+
         $api_url = 'http://' . $this->hostname . '/api' . str_replace('{id}', $id, $path);
-        $content = @file_get_contents($api_url);
+        $content = @file_get_contents($api_url, false, $context);
         
         try {
             $response = json_decode($content, true);
@@ -83,12 +97,7 @@ class RemoteServer
      **/
     public function createGroup($group_name)
     {
-        // !!! stub
-        // !!! mockup
-        return [
-            'status' => 'failed',
-            'error' => 'unexpected',
-        ];
+        return $this->getJsonResponse(self::API_URL_CREATE_GROUP, null, ['name' => $group_name]);
     }
 
     /**
