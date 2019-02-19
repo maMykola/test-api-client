@@ -1,9 +1,9 @@
 {% extends "AppBundle/layout.html.twig" %}
 
-{% block title %}Group Edit{% endblock %}
+{% block title %}User Edit{% endblock %}
 
 {% block body %}
-    <h1>Edit Group &laquo;{{ group.name }}&raquo;</h1>
+    <h1>Edit User &laquo;{{ user.name }}&raquo;</h1>
 
     {% if not error_message is empty %}
         <p style="color:red;">Error: {{ error_message }}</p>
@@ -15,6 +15,6 @@
     {{ form_end(form) }}
 
     <p>
-        <a href="{{ path('app_usergroup_show', {id: group.id}) }}">Back to Group</a>
+        <a href="{{ path('app_user_show', {id: user.id}) }}">Back to User</a>
     </p>
 {% endblock %}

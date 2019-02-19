@@ -80,7 +80,7 @@ class UserGroupController extends RemoteServerController
             ->add('name', TextType::class)
             ->add('save', SubmitType::class, ['label' => 'Update'])
             ->getForm();
-        $form->setData(['name' => empty($group['name']) ? '' : $group['name']]);
+        $form->setData($group);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

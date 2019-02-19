@@ -71,8 +71,41 @@ class UserController extends RemoteServerController
      **/
     public function editAction($id, Request $request)
     {
-        // !!! stub
-        return [];
+        $rs = $this->RemoteServer();
+
+        $user = $rs->findUser($id);
+        if (empty($user)) {
+            throw $this->createNotFoundException('User not found');
+        }
+
+        $error_message = '';
+        $form = $this->createFormBuilder()
+            ->add('name', TextType::class)
+            ->add('email', Emailtype::class)
+            ->add('group', TextType::class)
+            ->add('save', SubmitType::class, ['label' => 'Update User'])
+            ->getForm();
+        $form->setData($user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $update_result = $this->RemoteServer()->updateUser($id, $data);
+        }
+
+        if (!empty($update_result['status']) && $update_result['status'] == 'success') {
+            return $this->redirectToRoute('app_user_show', ['id' => $id]);
+        }
+
+        if (!empty($update_result['error'])) {
+            $error_message = $update_result['error'];
+        }
+
+        return [
+            'user' => $user,
+            'form' => $form->createView(),
+            'error_message' => $error_message,
+        ];
     }
 
     /**

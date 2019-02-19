@@ -13,6 +13,7 @@ class RemoteServer
     const API_URL_ALL_USERS = '/users';
     const API_URL_CREATE_USER = '/users/create';
     const API_URL_FIND_USER = '/users/{id}';
+    const API_URL_UPDATE_USER = '/users/{id}/update';
 
     /**
      * Holds remote server hostname.
@@ -164,5 +165,18 @@ class RemoteServer
     public function findUser($user_id)
     {
         return $this->getJsonResponse(self::API_URL_FIND_USER, $user_id);
+    }
+
+    /**
+     * Return status of user update.
+     *
+     * @param  integer  $user_id
+     * @param  array    $data
+     * @return array
+     * @author Mykola Martynov
+     **/
+    public function updateUser($user_id, $data)
+    {
+        return $this->getJsonResponse(self::API_URL_UPDATE_USER, $user_id, $data);
     }
 }
