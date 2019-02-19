@@ -11,6 +11,7 @@ class RemoteServer
     const API_URL_DELETE_GROUP = '/users/group/{id}/delete';
 
     const API_URL_ALL_USERS = '/users';
+    const API_URL_CREATE_USER = '/users/create';
 
     /**
      * Holds remote server hostname.
@@ -138,5 +139,17 @@ class RemoteServer
     public function allUsers()
     {
         return $this->getJsonResponse(self::API_URL_ALL_USERS);
+    }
+
+    /**
+     * Return status of user creation.
+     *
+     * @param  array  $user_info
+     * @return array
+     * @author Mykola Martynov
+     **/
+    public function createUser($user_info)
+    {
+        return $this->getJsonResponse(self::API_URL_CREATE_USER, null, $user_info);
     }
 }

@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -39,8 +40,29 @@ class UserController extends RemoteServerController
      **/
     public function newAction(Request $request)
     {
-        // !!! stub
-        return [];
+        $error_message = '';
+        $form = $this->createFormBuilder()
+            ->add('name', TextType::class)
+            ->add('email', EmailType::class)
+            ->add('group', TextType::class)
+            ->add('save', SubmitType::class, ['label' => 'Create User'])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $create_result = $this->RemoteServer()->createUser($data);
+        }
+
+        if (!empty($create_result['status']) && $create_result['status'] == 'success') {
+            return $this->redirectToRoute('app_user_show', ['id' => $create_result['user_id']]);
+        }
+
+        if (!empty($create_result['error'])) {
+            $error_message = $create_result['error'];
+        }
+
+        return ['form' => $form->createView(), 'error_message' => $error_message];
     }
 
     /**

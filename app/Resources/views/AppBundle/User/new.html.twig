@@ -1,0 +1,18 @@
+{% extends "AppBundle/layout.html.twig" %}
+
+{% block title %}User Create{% endblock %}
+
+{% block body %}
+    <h1>Create New User</h1>
+
+    {% if not error_message is empty %}
+        <p style="color:red;">Error: {{ error_message }}</p>
+    {% endif %}
+
+    <hr/>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_user_list') }}">Back to All Users</a>
+{% endblock %}
