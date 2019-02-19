@@ -1,7 +1,16 @@
 {% extends "AppBundle/layout.html.twig" %}
 
-{% block title %}AppBundle:UserGroup:new{% endblock %}
+{% block title %}Greoup Create{% endblock %}
 
 {% block body %}
-<h1>Welcome to the UserGroup:new page</h1>
+    <h1>Create New Group</h1>
+
+    {% if not error_message is empty %}
+        <p style="color:red;">Error: {{ error_message }}</p>
+    {% endif %}
+
+    <hr/>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 {% endblock %}

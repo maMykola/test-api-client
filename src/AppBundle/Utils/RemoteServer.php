@@ -95,4 +95,20 @@ class RemoteServer
 
         return $group;
     }
+
+    /**
+     * Return status of user group creation.
+     *
+     * @param  string  $group_name
+     * @return array
+     * @author Mykola Martynov
+     **/
+    public function createGroup($group_name)
+    {
+        // !!! stub
+        return [
+            'status' => 'failed',
+            'error' => 'unexpected',
+        ];
+    }
 }

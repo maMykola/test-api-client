@@ -5,6 +5,9 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/users/group")
@@ -35,10 +38,29 @@ class UserGroupController extends Controller
      * @Route("/new")
      * @Template("AppBundle/UserGroup/new.html.twig")
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
-        // !!! stub
-        return [];
+        $error_message = '';
+        $form = $this->createFormBuilder()
+            ->add('name', TextType::class)
+            ->add('save', SubmitType::class, ['label' => 'Create '])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $create_result = $this->RemoteServer()->createGroup($data['name']);
+        }
+
+        if (!empty($create_result['status']) && $create_result['status'] == 'success') {
+            return $this->redirectToRoute('app_usergroup_show', ['id' => $create_result['group_id']]);
+        }
+
+        if (!empty($create_result['error'])) {
+            $error_message = $create_result['error'];
+        }
+
+        return ['form' => $form->createView(), 'error_message' => $error_message];
     }
 
     /**
