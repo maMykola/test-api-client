@@ -1,0 +1,11 @@
+{% extends "AppBundle/layout.html.twig" %}
+
+{% block title %}User Groups{% endblock %}
+
+{% block body %}
+    <ol>
+        {% for groupn in groups %}
+            <li><a href="{{ path(app_usergroup_show) }}">{{ group.name }}</a></li>
+        {% endfor %}
+    </ol>
+{% endblock %}
