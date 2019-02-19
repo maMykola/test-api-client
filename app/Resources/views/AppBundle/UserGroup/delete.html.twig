@@ -1,7 +1,16 @@
 {% extends "AppBundle/layout.html.twig" %}
 
-{% block title %}AppBundle:UserGroup:delete{% endblock %}
+{% block title %}Group Delete{% endblock %}
 
 {% block body %}
-<h1>Welcome to the UserGroup:delete page</h1>
+    {{ form_start(form) }}
+    <h1>Delete Group &laquo;{{ group.name }}&raquo;</h1>
+    <p style="color:red;">Are you sure to remove this group?</p>
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    {% if not error_message is empty %}
+        <hr/>
+        <p style="color:red;">Error: {{ error_message }}</p>
+    {% endif %}
 {% endblock %}

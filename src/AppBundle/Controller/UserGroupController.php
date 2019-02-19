@@ -108,10 +108,38 @@ class UserGroupController extends Controller
      * @Route("/{id}/delete")
      * @Template("AppBundle/UserGroup/delete.html.twig")
      */
-    public function deleteAction($id)
+    public function deleteAction($id, Request $request)
     {
-        // !!! stub
-        return [];
+        $rs = $this->RemoteServer();
+
+        $group = $rs->findGroup($id);
+        if (empty($group)) {
+            return $this->createNotFoundException('Group not found');
+        }
+
+        $error_message = '';
+        $form = $this->createFormBuilder()
+            ->add('delete', SubmitType::class, ['label' => 'Delete Group'])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $delete_result = $this->RemoteServer()->deleteGroup($id);
+        }
+
+        if (!empty($delete_result['status']) && $delete_result['status'] == 'success') {
+            return $this->redirectToRoute('app_usergroup_list');
+        }
+
+        if (!empty($delete_result['error'])) {
+            $error_message = $delete_result['error'];
+        }
+
+        return [
+            'group' => $group,
+            'form' => $form->createView(),
+            'error_message' => $error_message,
+        ];
     }
 
     /**
