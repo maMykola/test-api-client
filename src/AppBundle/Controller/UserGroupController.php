@@ -27,8 +27,8 @@ class UserGroupController extends Controller
      */
     public function showAction($id)
     {
-        // !!! stub
-        return [];
+        $group = $this->RemoteServer()->findGroup($id);
+        return ['group' => $group];
     }
 
     /**
