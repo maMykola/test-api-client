@@ -4,6 +4,10 @@
 
 {% block body %}
     <h1>{{ group.name }}</h1>
+    <p>
+        <a href="{{ path('app_usergroup_edit', {id: group.id}) }}">edit</a>
+        <a href="{{ path('app_usergroup_delete', {id: group.id}) }}">delete</a>
+    </p>
     <hr/>
     <ol>
         {% for user in group.users %}
@@ -13,4 +17,8 @@
             </li>
         {% endfor %}
     </ol>
+
+    <p>
+        <a href="{{ path('app_usergroup_list') }}">Back to All Groups</a>
+    </p>
 {% endblock %}

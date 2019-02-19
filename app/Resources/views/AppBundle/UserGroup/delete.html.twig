@@ -9,6 +9,10 @@
     {{ form_widget(form) }}
     {{ form_end(form) }}
 
+    <p>
+        <a href="{{ path('app_usergroup_show', {id: group.id}) }}">Back to Group</a>
+    </p>
+
     {% if not error_message is empty %}
         <hr/>
         <p style="color:red;">Error: {{ error_message }}</p>

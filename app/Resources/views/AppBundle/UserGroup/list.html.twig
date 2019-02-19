@@ -8,4 +8,8 @@
             <li><a href="{{ path('app_usergroup_show', {id: group.id}) }}">{{ group.name }}</a></li>
         {% endfor %}
     </ol>
+
+    <p>
+        <a href="{{ path('app_usergroup_new') }}">New Group</a>
+    </p>
 {% endblock %}

@@ -13,4 +13,8 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
+
+    <p>
+        <a href="{{ path('app_usergroup_show', {id: group.id}) }}">Back to Group</a>
+    </p>
 {% endblock %}
