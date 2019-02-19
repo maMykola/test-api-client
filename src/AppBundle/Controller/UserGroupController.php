@@ -73,7 +73,7 @@ class UserGroupController extends Controller
 
         $group = $rs->findGroup($id);
         if (empty($group)) {
-            return $this->createNotFoundException('Group not found');
+            throw $this->createNotFoundException('Group not found');
         }
 
         $error_message = '';
@@ -114,7 +114,7 @@ class UserGroupController extends Controller
 
         $group = $rs->findGroup($id);
         if (empty($group)) {
-            return $this->createNotFoundException('Group not found');
+            throw $this->createNotFoundException('Group not found');
         }
 
         $error_message = '';
