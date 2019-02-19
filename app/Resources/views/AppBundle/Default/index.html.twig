@@ -1,0 +1,12 @@
+{% extends 'AppBundle/layout.html.twig' %}
+
+{% block title %}Dahsboard{% endblock %}
+
+{% block body %}
+
+    <ul>
+        <li><a href="{{ path('app_user_list') }}">All Users</a></li>
+        <li><a href="{{ path('app_usergroup_list') }}">All Groups</a></li>
+    </ul>
+
+{% endblock %}
