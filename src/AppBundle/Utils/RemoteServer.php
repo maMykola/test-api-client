@@ -7,6 +7,7 @@ class RemoteServer
     const API_URL_ALL_GROUPS = '/users/group';
     const API_URL_FIND_GROUP = '/users/group/{id}';
     const API_URL_CREATE_GROUP = '/users/group/create';
+    const API_URL_UPDATE_GROUP = '/users/group/{id}/update';
 
     /**
      * Holds remote server hostname.
@@ -110,11 +111,6 @@ class RemoteServer
      **/
     public function updateGroup($group_id, $data)
     {
-        // !!! stub
-        // !!! mockup
-        return [
-            'status' => 'failed',
-            'error' => 'unexpected',
-        ];
+        return $this->getJsonResponse(self::API_URL_UPDATE_GROUP, $group_id, $data);
     }
 }
