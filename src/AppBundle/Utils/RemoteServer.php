@@ -12,6 +12,7 @@ class RemoteServer
 
     const API_URL_ALL_USERS = '/users';
     const API_URL_CREATE_USER = '/users/create';
+    const API_URL_FIND_USER = '/users/{id}';
 
     /**
      * Holds remote server hostname.
@@ -151,5 +152,17 @@ class RemoteServer
     public function createUser($user_info)
     {
         return $this->getJsonResponse(self::API_URL_CREATE_USER, null, $user_info);
+    }
+
+    /**
+     * Return information about user from remote server
+     *
+     * @param  integer  $user_id
+     * @return array
+     * @author Mykola Martynov
+     **/
+    public function findUser($user_id)
+    {
+        return $this->getJsonResponse(self::API_URL_FIND_USER, $user_id);
     }
 }

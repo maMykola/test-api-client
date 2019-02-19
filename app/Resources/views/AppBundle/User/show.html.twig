@@ -1,0 +1,20 @@
+{% extends 'AppBundle/layout.html.twig' %}
+
+{% block title %}User Information{% endblock %}
+
+{% block body %}
+    <h1>{{ user.name }}</h1>
+    <p>
+        <a href="{{ path('app_user_edit', {id: user.id}) }}">edit</a>
+        <a href="{{ path('app_user_delete', {id: user.id}) }}">delete</a>
+    </p>
+    <hr/>
+    <p>Email: <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+    <p>Group: {{ user.group }}</p>
+
+    <hr/>
+    
+    <p>
+        <a href="{{ path('app_user_list') }}">Back to All Users</a>
+    </p>
+{% endblock %}

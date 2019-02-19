@@ -28,10 +28,10 @@ class UserController extends RemoteServerController
      * @Route("/{id}", requirements={"id"="\d+"})
      * @Template("AppBundle/User/show.html.twig")
      **/
-    public function showAction($user_id)
+    public function showAction($id)
     {
-        // !!! stub
-        return [];
+        $user = $this->RemoteServer()->findUser($id);
+        return ['user' => $user];
     }
 
     /**
@@ -69,7 +69,7 @@ class UserController extends RemoteServerController
      * @Route("/{id}/edit", requirements={"id"="\d+"})
      * @Template("AppBundle/User/edit.html.twig")
      **/
-    public function editAction($user_id, Request $request)
+    public function editAction($id, Request $request)
     {
         // !!! stub
         return [];
@@ -79,7 +79,7 @@ class UserController extends RemoteServerController
      * @Route("/{id}/delete", requirements={"id"="\d+"})
      * @Template("AppBundle/User/delete.html.twig")
      **/
-    public function deleteAction($user_id, Request $request)
+    public function deleteAction($id, Request $request)
     {
         // !!! stub
         return [];
