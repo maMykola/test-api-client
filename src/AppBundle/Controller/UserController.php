@@ -19,9 +19,8 @@ class UserController extends RemoteServerController
      */
     public function listAction()
     {
-        // !!! stub
-        // !!! mockup
-        return ['users' => []];
+        $users = $this->RemoteServer()->allUsers();
+        return ['users' => $users];
     }
 
     /**

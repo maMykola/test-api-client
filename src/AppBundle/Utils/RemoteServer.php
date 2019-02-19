@@ -10,6 +10,8 @@ class RemoteServer
     const API_URL_UPDATE_GROUP = '/users/group/{id}/update';
     const API_URL_DELETE_GROUP = '/users/group/{id}/delete';
 
+    const API_URL_ALL_USERS = '/users';
+
     /**
      * Holds remote server hostname.
      *
@@ -125,5 +127,16 @@ class RemoteServer
     public function deleteGroup($group_id)
     {
         return $this->getJsonResponse(self::API_URL_DELETE_GROUP, $group_id);
+    }
+
+    /**
+     * Return list of all users from remote server.
+     *
+     * @return array
+     * @author Mykola Martynov
+     **/
+    public function allUsers()
+    {
+        return $this->getJsonResponse(self::API_URL_ALL_USERS);
     }
 }
