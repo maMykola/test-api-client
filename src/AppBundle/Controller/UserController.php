@@ -114,7 +114,35 @@ class UserController extends RemoteServerController
      **/
     public function deleteAction($id, Request $request)
     {
-        // !!! stub
-        return [];
+        $rs = $this->RemoteServer();
+
+        $user = $rs->findUser($id);
+        if (empty($user)) {
+            throw $this->createNotFoundException('User not found');
+        }
+
+        $error_message = '';
+        $form = $this->createFormBuilder()
+            ->add('delete', SubmitType::class, ['label' => 'Delete User'])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $delete_result = $rs->deleteUser($id);
+        }
+
+        if (!empty($delete_result['status']) && $delete_result['status'] == 'success') {
+            return $this->redirectToRoute('app_user_list');
+        }
+
+        if (!empty($delete_result['error'])) {
+            $error_message = $delete_result['error'];
+        }
+
+        return [
+            'user' => $user,
+            'form' => $form->createView(),
+            'error_message' => $error_message,
+        ];
     }
 }

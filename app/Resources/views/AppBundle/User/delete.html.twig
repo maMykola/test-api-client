@@ -1,0 +1,20 @@
+{% extends "AppBundle/layout.html.twig" %}
+
+{% block title %}User Delete{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    <h1>Delete User &laquo;{{ user.name }}&raquo;</h1>
+    <p style="color:red;">Are you sure to remove this user?</p>
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <p>
+        <a href="{{ path('app_user_show', {id: user.id}) }}">Back to User</a>
+    </p>
+
+    {% if not error_message is empty %}
+        <hr/>
+        <p style="color:red;">Error: {{ error_message }}</p>
+    {% endif %}
+{% endblock %}

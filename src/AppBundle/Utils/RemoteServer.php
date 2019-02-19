@@ -14,6 +14,7 @@ class RemoteServer
     const API_URL_CREATE_USER = '/users/create';
     const API_URL_FIND_USER = '/users/{id}';
     const API_URL_UPDATE_USER = '/users/{id}/update';
+    const API_URL_DELETE_USER = '/users/{id}/delete';
 
     /**
      * Holds remote server hostname.
@@ -178,5 +179,17 @@ class RemoteServer
     public function updateUser($user_id, $data)
     {
         return $this->getJsonResponse(self::API_URL_UPDATE_USER, $user_id, $data);
+    }
+
+    /**
+     * Return status of user deletion on remote server.
+     *
+     * @param  integer  $user_id
+     * @return array
+     * @author Mykola Martynov
+     **/
+    public function deleteUser($user_id)
+    {
+        return $this->getJsonResponse(self::API_URL_DELETE_USER, $user_id);
     }
 }

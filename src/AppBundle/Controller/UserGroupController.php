@@ -123,7 +123,7 @@ class UserGroupController extends RemoteServerController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $delete_result = $this->RemoteServer()->deleteGroup($id);
+            $delete_result = $rs->deleteGroup($id);
         }
 
         if (!empty($delete_result['status']) && $delete_result['status'] == 'success') {
