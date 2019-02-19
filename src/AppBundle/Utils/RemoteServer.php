@@ -5,6 +5,7 @@ namespace AppBundle\Utils;
 class RemoteServer
 {
     const API_URL_ALL_GROUPS = '/users/group';
+    const API_URL_FIND_GROUP = '/users/group/{id}';
 
     /**
      * Holds remote server hostname.
@@ -28,17 +29,26 @@ class RemoteServer
     }
 
     /**
-     * Return remote url with the given path.
+     * Return response from 
      *
      * @param  string   $path
      * @param  integer  $id
-     * @return string
+     * @param  array    $post_data
+     * @return array
      * @author Mykola Martynov
      **/
-    private function getUrl($path, $id = null)
+    private function getJsonResponse($path, $id = null, $post_data = null)
     {
-        $url = 'http://' . $this->hostname . '/api' . str_replace('{id}', $id, $path);
-        return $url;
+        $api_url = 'http://' . $this->hostname . '/api' . str_replace('{id}', $id, $path);
+        $content = @file_get_contents($api_url);
+        
+        try {
+            $response = json_decode($content, true);
+        } catch (\Exceptino $ex) {
+            return null;
+        }
+
+        return $response;
     }
 
     /**
@@ -49,16 +59,7 @@ class RemoteServer
      **/
     public function allGroups()
     {
-        $api_url = $this->getUrl(self::API_URL_ALL_GROUPS);
-        $content = @file_get_contents($api_url);
-        
-        try {
-            $groups = json_decode($content, true);
-        } catch (\Exceptino $ex) {
-            return null;
-        }
-
-        return $groups;
+        return $this->getJsonResponse(self::API_URL_ALL_GROUPS);
     }
 
     /**
@@ -70,47 +71,7 @@ class RemoteServer
      **/
     public function findGroup($id)
     {
-        // !!! stub
-        // !!! mockup
-        foreach ($this->allGroups() as $group) {
-            if ($group['id'] == $id) {
-                break;
-            }
-        }
-
-        if (empty($group) || $group['id'] != $id) {
-            return null;
-        }
-
-        switch ($id) {
-            case 11:
-                $users = [
-                    ['name' => 'John Doe', 'email' => 'john.doe@example.com'],
-                    ['name' => 'Ben Laden', 'email' => 'ben.laden@example.com'],
-                ];
-                break;
-
-            case 9:
-                $users = [
-                    ['name' => 'John Vue', 'email' => 'john.vue@example.com'],
-                    ['name' => 'Sam Deniels', 'email' => 'sam.deniels@example.com'],
-                ];
-                break;
-
-            case 10:
-                $users = [
-                    ['name' => 'Mikel Fox', 'email' => 'mikel.fox@exaple.com'],
-                ];
-                break;
-
-            default:
-                $users = [];
-                break;
-        }
-
-        $group['users'] = $users;
-
-        return $group;
+        return $this->getJsonResponse(self::API_URL_FIND_GROUP, $id);
     }
 
     /**
