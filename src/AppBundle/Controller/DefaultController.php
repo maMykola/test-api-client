@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="dashboard")
      * @Template("AppBundle/Default/index.html.twig")
      */
     public function indexAction()
